@@ -1,32 +1,17 @@
 import "./App.css";
-import { Heading } from "@chakra-ui/react";
+import { Flex, Heading, Select } from "@chakra-ui/react";
 import { useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import Taskcontainer from "./components/Taskcontainer";
 import { v4 as uuidv4 } from "uuid";
 import { CRITICAL, MAJOR, MEDIUM, LOW } from "./constants/ContainerIds";
+import InputBox from "./components/InputBox";
 
 function App() {
-  const critical = [
-    { task: "bala", id: uuidv4() },
-    { task: "balmurugana", id: uuidv4() },
-    { task: "dharma", id: uuidv4() },
-  ];
-  const major = [
-    { task: "hema", id: "sd1" },
-    { task: "sathya", id: "sdf2" },
-    { task: "nasd", id: "sdfc3" },
-  ];
-  const medium = [
-    { task: "bala", id: "sd11" },
-    { task: "balmurugana", id: "sdf22" },
-    { task: "dharma", id: "sdfc33" },
-  ];
-  const low = [
-    { task: "bala", id: "sd111" },
-    { task: "balmurugana", id: "sdf222" },
-    { task: "dharma", id: "sdfc333" },
-  ];
+  const critical = [];
+  const major = [];
+  const medium = [];
+  const low = [];
 
   const [details, setDetails] = useState({
     [CRITICAL]: critical,
@@ -34,7 +19,7 @@ function App() {
     [MEDIUM]: medium,
     [LOW]: low,
   });
-  console.log("details", details);
+  // console.log("details", details);
 
   const onDragEnd = (result) => {
     const { source, destination } = result;
@@ -84,7 +69,19 @@ function App() {
   return (
     <div>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Heading>Jira Task</Heading>
+        <Flex
+          paddingLeft="5%"
+          paddingRight="5%"
+          w="80%"
+          margin="auto"
+          bg={"yellow"}
+          alignItems="center"
+          justifyContent="center"
+          boxSizing="border-box"
+        >
+          <Heading w="40%">Jira Task</Heading>
+          <InputBox addTask={addTask} containerId={MAJOR} />
+        </Flex>
         <Taskcontainer
           critical={details.critical}
           major={details.major}

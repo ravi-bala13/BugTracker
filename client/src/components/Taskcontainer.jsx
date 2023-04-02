@@ -1,8 +1,7 @@
-import { Box, Button, Flex, Input } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import Task from "./Task";
 import "../App.css";
-import InputBox from "./InputBox";
 import { CRITICAL, LOW, MAJOR, MEDIUM } from "../constants/ContainerIds";
 
 function Taskcontainer({ critical, major, medium, low, addTask }) {
@@ -17,7 +16,7 @@ function Taskcontainer({ critical, major, medium, low, addTask }) {
       boxSizing="border-box"
     >
       <Box w="24%" h="90%" bg="gray" borderRadius="5px">
-        <InputBox addTask={addTask} containerId={CRITICAL} />
+        <Box>Critical</Box>
         <Droppable droppableId={CRITICAL}>
           {(provided, snapshot) => (
             <Box ref={provided.innerRef} {...provided.droppableProps} h="100%">
@@ -33,7 +32,7 @@ function Taskcontainer({ critical, major, medium, low, addTask }) {
       </Box>
 
       <Box w="24%" h="90%" bg="gray">
-        <InputBox addTask={addTask} containerId={MAJOR} />
+        <Box>Major</Box>
         <Droppable droppableId={MAJOR}>
           {(provided) => (
             <Box ref={provided.innerRef} {...provided.droppableProps} h="100%">
@@ -49,7 +48,7 @@ function Taskcontainer({ critical, major, medium, low, addTask }) {
       </Box>
 
       <Box w="24%" h="90%" bg="gray">
-        <InputBox addTask={addTask} containerId={MEDIUM} />
+        <Box>Meidum</Box>
         <Droppable droppableId={MEDIUM}>
           {(provided) => (
             <Box
@@ -70,7 +69,7 @@ function Taskcontainer({ critical, major, medium, low, addTask }) {
       </Box>
 
       <Box w="24%" h="90%" bg="gray">
-        <InputBox addTask={addTask} containerId={LOW} />
+        <Box>Low</Box>
         <Droppable droppableId={LOW}>
           {(provided) => (
             <Box ref={provided.innerRef} {...provided.droppableProps} h="100%">
