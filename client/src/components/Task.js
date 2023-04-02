@@ -6,6 +6,8 @@ function Task({ item, provided }) {
       h="50px"
       bg="pink"
       padding="1%"
+      border="5px"
+      borderColor="pink"
       marginBottom="10px"
       ref={provided.innerRef}
       {...provided.draggableProps}

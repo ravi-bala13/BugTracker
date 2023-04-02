@@ -2,8 +2,9 @@ import "./App.css";
 import { Heading } from "@chakra-ui/react";
 import { useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
-import Taskcontainer from "./Taskcontainer";
+import Taskcontainer from "./components/Taskcontainer";
 import { v4 as uuidv4 } from "uuid";
+import { CRITICAL, MAJOR, MEDIUM, LOW } from "./constants/ContainerIds";
 
 function App() {
   const critical = [
@@ -28,10 +29,10 @@ function App() {
   ];
 
   const [details, setDetails] = useState({
-    critical: critical,
-    major: major,
-    medium: medium,
-    low: low,
+    [CRITICAL]: critical,
+    [MAJOR]: major,
+    [MEDIUM]: medium,
+    [LOW]: low,
   });
   console.log("details", details);
 
@@ -69,6 +70,17 @@ function App() {
     });
   };
 
+  const addTask = (element, containerId) => {
+    // console.log("element, containerId", element, containerId);
+    let tempTaskList = details[containerId];
+    let taskObj = {};
+    taskObj["id"] = uuidv4();
+    taskObj["task"] = element;
+    tempTaskList.push(taskObj);
+
+    setDetails({ ...details, [containerId]: tempTaskList });
+  };
+
   return (
     <div>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -78,6 +90,7 @@ function App() {
           major={details.major}
           medium={details.medium}
           low={details.low}
+          addTask={addTask}
         />
       </DragDropContext>
     </div>
