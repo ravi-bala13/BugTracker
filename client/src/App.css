@@ -19,17 +19,3 @@
   }
 }
 
-#taskContainer{
-  width: 80%;
-  background-color: blue;
-  margin: auto;
-  height: 80vh;
-  display: flex;
-
-}
-
-.critical{
-  width: 20%;
-  height: 89%;
-  background-color: red;
-}

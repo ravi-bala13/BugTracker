@@ -1,5 +1,4 @@
 import { Box } from "@chakra-ui/react";
-import { Draggable } from "react-beautiful-dnd";
 
 function Task({ item, provided }) {
   return (
@@ -18,16 +17,3 @@ function Task({ item, provided }) {
 }
 
 export default Task;
-
-{
-  /* <Box
-          marginBottom="2px"
-          h="50px"
-          bg="pink"
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          ref={provided.innerRef}
-        >
-          {task}
-        </Box> */
-}

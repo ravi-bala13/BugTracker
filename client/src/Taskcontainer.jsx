@@ -17,9 +17,10 @@ function Taskcontainer({ critical, major, medium, low }) {
     >
       <Droppable droppableId="critical">
         {(provided, snapshot) => (
-          <div
+          <Box
             w="24%"
-            h="80%"
+            h="90%"
+            bg="gray"
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
@@ -29,7 +30,7 @@ function Taskcontainer({ critical, major, medium, low }) {
               </Draggable>
             ))}
             {provided.placeholder}
-          </div>
+          </Box>
         )}
       </Droppable>
 
@@ -37,7 +38,8 @@ function Taskcontainer({ critical, major, medium, low }) {
         {(provided) => (
           <Box
             w="24%"
-            h="80%"
+            h="90%"
+            bg="gray"
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
@@ -50,37 +52,43 @@ function Taskcontainer({ critical, major, medium, low }) {
           </Box>
         )}
       </Droppable>
-      {/* <Droppable droppableId="medium">
+      <Droppable droppableId="medium">
         {(provided) => (
           <Box
             w="24%"
-            h="80%"
+            h="90%"
+            bg="gray"
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
             {medium.map((el, index) => (
-              <Task task={el} key={index} index={index}></Task>
+              <Draggable draggableId={el.id} index={index} key={el.id}>
+                {(provided) => <Task provided={provided} item={el} />}
+              </Draggable>
             ))}
             {provided.placeholder}
           </Box>
         )}
-      </Droppable> */}
+      </Droppable>
 
-      {/* <Droppable droppableId="low">
+      <Droppable droppableId="low">
         {(provided) => (
           <Box
             w="24%"
-            h="80%"
+            h="90%"
+            bg="gray"
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
             {low.map((el, index) => (
-              <Task task={el} key={index} index={index}></Task>
+              <Draggable draggableId={el.id} index={index} key={el.id}>
+                {(provided) => <Task provided={provided} item={el} />}
+              </Draggable>
             ))}
             {provided.placeholder}
           </Box>
         )}
-      </Droppable> */}
+      </Droppable>
     </Flex>
   );
 }
