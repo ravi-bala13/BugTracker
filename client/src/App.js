@@ -2,7 +2,7 @@ import "./App.css";
 import { Flex, Heading, Select } from "@chakra-ui/react";
 import { useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
-import Taskcontainer from "./components/Taskcontainer";
+import Bugcontainer from "./components/Bugcontainer";
 import { v4 as uuidv4 } from "uuid";
 import { CRITICAL, MAJOR, MEDIUM, LOW } from "./constants/ContainerIds";
 import InputBox from "./components/InputBox";
@@ -57,13 +57,19 @@ function App() {
 
   const addTask = (element, containerId) => {
     // console.log("element, containerId", element, containerId);
-    let tempTaskList = details[containerId];
-    let taskObj = {};
-    taskObj["id"] = uuidv4();
-    taskObj["task"] = element;
-    tempTaskList.push(taskObj);
+    let temBugList = details[containerId];
+    let bugObj = {};
+    bugObj["id"] = uuidv4();
+    bugObj["task"] = element;
+    temBugList.push(bugObj);
 
-    setDetails({ ...details, [containerId]: tempTaskList });
+    setDetails({ ...details, [containerId]: temBugList });
+  };
+
+  const removeTask = (toRemoveId, containerId) => {
+    let temBugList = details[containerId];
+    temBugList = temBugList.filter((el) => el.id != toRemoveId);
+    setDetails({ ...details, [containerId]: temBugList });
   };
 
   return (
@@ -74,20 +80,22 @@ function App() {
           paddingRight="5%"
           w="80%"
           margin="auto"
-          bg={"yellow"}
+          // bg={"yellow"}
           alignItems="center"
           justifyContent="center"
           boxSizing="border-box"
         >
-          <Heading w="40%">Jira Task</Heading>
+          <Heading color="#fff" fontSize="24px" w="40%">
+            Jira Task
+          </Heading>
           <InputBox addTask={addTask} containerId={MAJOR} />
         </Flex>
-        <Taskcontainer
+        <Bugcontainer
           critical={details.critical}
           major={details.major}
           medium={details.medium}
           low={details.low}
-          addTask={addTask}
+          removeTask={removeTask}
         />
       </DragDropContext>
     </div>

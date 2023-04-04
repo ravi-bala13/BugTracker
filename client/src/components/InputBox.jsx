@@ -32,6 +32,7 @@ function InputBox({ addTask }) {
         <option value={LOW}>{LOW}</option>
       </Select>
       <Input
+        border="2px solid #149fff"
         onChange={handleInputChange}
         name={containerId}
         value={taskDetails[containerId]}
@@ -40,12 +41,13 @@ function InputBox({ addTask }) {
         placeholder="Enter the task details"
       />
       <Button
+        className="add-button"
         onClick={() => {
           addTask(taskDetails[containerId], containerId);
           setTaskDetails({ ...taskDetails, [containerId]: "" });
         }}
         w="38%"
-        h="32px"
+        h="30px"
       >
         Create Bug
       </Button>
