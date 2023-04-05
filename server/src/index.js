@@ -8,7 +8,7 @@ app.use(cors());
 
 app.use(express.json());
 
-const userController = require("./controllers/users.controller");
+const bugController = require("./controllers/bug.controller");
 
-app.use("/users", userController);
+app.use("/bugs", bugController);
 module.exports = app;
