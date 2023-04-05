@@ -16,7 +16,7 @@ function Bug({ item, provided, removeTask, containerId }) {
     >
       <Box w="80%">{item.task}</Box>
       <span
-        class="material-symbols-rounded"
+        className="material-symbols-rounded"
         onClick={() => removeTask(item.id, containerId)}
       >
         delete

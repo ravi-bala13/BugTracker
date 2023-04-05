@@ -1,6 +1,7 @@
 import { Button, Input, Select } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { CRITICAL, LOW, MAJOR, MEDIUM } from "../constants/ContainerIds";
+import axios from "axios";
 
 function InputBox({ addTask }) {
   const [taskDetails, setTaskDetails] = useState({
@@ -9,6 +10,7 @@ function InputBox({ addTask }) {
     [MEDIUM]: "",
     [LOW]: "",
   });
+
   //   console.log("setTaskDetails", taskDetails);
   const [containerId, setContainerId] = useState(CRITICAL);
 
@@ -45,6 +47,7 @@ function InputBox({ addTask }) {
         onClick={() => {
           addTask(taskDetails[containerId], containerId);
           setTaskDetails({ ...taskDetails, [containerId]: "" });
+          // saveToDb(containerId, taskDetails[containerId]);
         }}
         w="38%"
         h="30px"

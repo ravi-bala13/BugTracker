@@ -1,11 +1,12 @@
 import "./App.css";
 import { Flex, Heading, Select } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import Bugcontainer from "./components/Bugcontainer";
 import { v4 as uuidv4 } from "uuid";
 import { CRITICAL, MAJOR, MEDIUM, LOW } from "./constants/ContainerIds";
 import InputBox from "./components/InputBox";
+import axios from "axios";
 
 function App() {
   const critical = [];
@@ -19,7 +20,17 @@ function App() {
     [MEDIUM]: medium,
     [LOW]: low,
   });
-  // console.log("details", details);
+  console.log("details", details);
+
+  function saveToDb(containerId, bugsList) {
+    console.log("containerId, bugsList", containerId, bugsList);
+    let bug = {};
+    bug["containerId"] = containerId;
+    bug["bugs"] = bugsList;
+    axios
+      .post(`http://localhost:8080/bugs`, bug)
+      .then((res) => console.log(res));
+  }
 
   const onDragEnd = (result) => {
     const { source, destination } = result;
@@ -48,6 +59,14 @@ function App() {
     destinationList.splice(destination.index, 0, add);
     // console.log("sourceList", sourceList);
     // console.log("destinationList", destinationList);
+    if (source.droppableId === destination.droppableId) {
+      console.log("saving single");
+      saveToDb(destination.droppableId, destinationList);
+    } else {
+      console.log("saving both");
+      saveToDb(source.droppableId, sourceList);
+      saveToDb(destination.droppableId, destinationList);
+    }
     setDetails({
       ...details,
       [source.droppableId]: sourceList,
@@ -62,13 +81,30 @@ function App() {
     bugObj["id"] = uuidv4();
     bugObj["task"] = element;
     temBugList.push(bugObj);
-
+    saveToDb(containerId, temBugList);
     setDetails({ ...details, [containerId]: temBugList });
+  };
+
+  useEffect(() => {
+    fetchFromDb();
+  }, []);
+
+  const fetchFromDb = () => {
+    axios.get(`http://localhost:8080/bugs`).then((res) => {
+      console.log(res);
+      let temDetails = { ...details };
+      res.data.forEach((element) => {
+        console.log("element", element);
+        temDetails[element.containerId] = element.bugs;
+      });
+      setDetails(temDetails);
+    });
   };
 
   const removeTask = (toRemoveId, containerId) => {
     let temBugList = details[containerId];
     temBugList = temBugList.filter((el) => el.id != toRemoveId);
+    saveToDb(containerId, temBugList);
     setDetails({ ...details, [containerId]: temBugList });
   };
 
